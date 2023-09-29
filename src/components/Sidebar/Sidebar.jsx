@@ -1,7 +1,7 @@
 import { SidebarItems } from "../SidebarItems/SidebarItems";
 import "./Sidebar.css";
 
-export function Sidebar() {
+export function Sidebar({ isLoading }) {
   return (
     <div className="main__sidebar sidebar">
       <div className="sidebar__personal">
@@ -14,9 +14,15 @@ export function Sidebar() {
       </div>
       <div className="sidebar__block">
         <div className="sidebar__list">
-          <SidebarItems item={{ link: "#", img: "img/playlist01.png" }} />
-          <SidebarItems item={{ link: "#", img: "img/playlist02.png" }} />
-          <SidebarItems item={{ link: "#", img: "img/playlist03.png" }} />
+          <SidebarItems
+            item={{ link: "#", img: "img/playlist01.png", loading: isLoading }}
+          />
+          <SidebarItems
+            item={{ link: "#", img: "img/playlist02.png", loading: isLoading }}
+          />
+          <SidebarItems
+            item={{ link: "#", img: "img/playlist03.png", loading: isLoading }}
+          />
         </div>
       </div>
     </div>

@@ -6,6 +6,8 @@ const arrTracks = [
     album: "Welcome Reality",
     isliked: false,
     trackTime: "4:44",
+    genre: "Электронная музыка",
+    year: 2011,
   },
   {
     id: 1,
@@ -14,6 +16,8 @@ const arrTracks = [
     album: "Elektro",
     isliked: false,
     trackTime: "2:22",
+    genre: "Электронная музыка",
+    year: 2021,
   },
   {
     id: 2,
@@ -22,6 +26,8 @@ const arrTracks = [
     album: "I’m Fire",
     isliked: false,
     trackTime: "2:22",
+    genre: "Поп-музыка",
+    year: 2008,
   },
   {
     id: 3,
@@ -31,6 +37,8 @@ const arrTracks = [
     album: "Non Stop",
     isliked: false,
     trackTime: "4:12",
+    genre: 'Техно',
+    year: 2007,
   },
   {
     id: 4,
@@ -40,6 +48,8 @@ const arrTracks = [
     album: "Run Run",
     isliked: false,
     trackTime: "2:54",
+    genre: 'Хип-хоп',
+    year: 2010,    
   },
   {
     id: 5,
@@ -49,6 +59,8 @@ const arrTracks = [
     album: "Eyes on Fire",
     isliked: false,
     trackTime: "5:20",
+    genre: 'Рок',
+    year: 2007,
   },
   {
     id: 6,
@@ -58,6 +70,8 @@ const arrTracks = [
     album: "Mucho Bien",
     isliked: false,
     trackTime: "3:41",
+    genre: 'Поп-музыка',
+    year: 2022,
   },
   {
     id: 7,
@@ -66,14 +80,18 @@ const arrTracks = [
     album: "Captivating",
     isliked: false,
     trackTime: "1:48",
+    genre: 'Хип-хоп',
+    year: 2022,
   },
   {
     id: 8,
-    trackName: "How Deep Is Your Love",
-    trackAuthor: "Calvin Harris, Disciples",
-    album: "How Deep Is Your Love",
+    trackName: "Halfway to Hell",
+    trackAuthor: "Jelly Roll",
+    album: "Whitsitt Chapel",
     isliked: false,
-    trackTime: "3:32",
+    trackTime: "2:58",
+    genre: 'Кантри',
+    year: 2023,
   },
 ];
 export default arrTracks;

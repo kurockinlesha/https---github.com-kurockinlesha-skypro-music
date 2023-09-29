@@ -1,6 +1,6 @@
 import "./AudioPlayer.css";
 
-export function AudioPlayer() {
+export function AudioPlayer({ isLoading }) {
   return (
     <div className="bar">
       <div className="bar__content">
@@ -41,16 +41,26 @@ export function AudioPlayer() {
                     <use xlinkHref="img/icon/sprite.svg#icon-note" />
                   </svg>
                 </div>
-                <div className="track-play__author">
-                  <a className="track-play__author-link" href="http://">
-                    Ты та...
-                  </a>
-                </div>
-                <div className="track-play__album">
-                  <a className="track-play__album-link" href="http://">
-                    Баста
-                  </a>
-                </div>
+
+                {isLoading ? (
+                  <div className="track-play__author">
+                    <a className="track-play__author-link" href="http://">
+                      Ты та...
+                    </a>
+                  </div>
+                ) : (
+                  <div className="skeleton"> </div>
+                )}
+                
+                {isLoading ? (
+                  <div className="track-play__album">
+                    <a className="track-play__album-link" href="http://">
+                      Баста
+                    </a>
+                  </div>
+                ) : (
+                  <div className="skeleton"> </div>
+                )}
               </div>
               <div className="track-play__like-dis">
                 <div className="track-play__like _btn-icon">

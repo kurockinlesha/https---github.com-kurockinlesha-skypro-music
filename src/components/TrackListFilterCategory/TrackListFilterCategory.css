@@ -1,0 +1,88 @@
+.filter__category-name {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.filter__button {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  border: 1px solid #ffffff;
+  border-radius: 60px;
+  padding: 6px 20px;
+  background: none;
+  color: #ffffff;
+}
+
+.filter__button:hover {
+  border-color: #d9b6ff;
+  color: #d9b6ff;
+  cursor: pointer;
+}
+.btn_active {
+  border-color: #ad61ff;
+  color: #ad61ff;
+}
+
+.filter__button:not(:last-child) {
+  margin-right: 10px;
+}
+
+.filter__category-menu {
+  max-height: 305px;
+  width: 248px;
+  display: inline-flex;
+  padding: 34px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 12px;
+  background: #313131;
+  position: absolute;
+  top: 49px;
+  z-index: 2;
+}
+.filter__list {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
+  color: #fff;
+  font-family: "StratosSkyeng", sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+  overflow-y: auto;
+}
+.filter__item {
+  font-family: "StratosSkyeng", sans-serif;
+  color: #fff;
+  font-variant-numeric: lining-nums proportional-nums;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; /* 120% */
+}
+.filter__item:hover {
+  color: #b672ff;
+  text-decoration-line: underline;
+  cursor: pointer;
+}
+.filter__list::-webkit-scrollbar {
+   width: 4px;   
+}
+
+.filter__list::-webkit-scrollbar-track {
+  background-color: #4b4949;
+  border-radius: 2px;
+}
+.filter__list::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: white;
+  height: 65px;
+
+}

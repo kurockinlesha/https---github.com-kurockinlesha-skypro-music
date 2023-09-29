@@ -4,7 +4,7 @@ import "./SidebarItems.css";
 export function SidebarItems(props) {
   return (
     <div className="sidebar__item">
-      <BrowserRouter>
+      {props.item.loading ? (<BrowserRouter>
         <Link className="sidebar__link" href={props.item.link}>
           <img
             className="sidebar__img"
@@ -12,7 +12,7 @@ export function SidebarItems(props) {
             alt="day's playlist"
           />
         </Link>
-      </BrowserRouter>
+      </BrowserRouter>) : ( <div className="skeleton skeleton__sidebar"> </div>)}
     </div>
   );
 }
