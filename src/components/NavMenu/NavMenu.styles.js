@@ -1,18 +1,26 @@
-.main__nav {
+import { styled } from "styled-components";
+
+export const mainNav = styled.nav`
   width: 244px;
   background-color: #181818;
   padding: 20px 0 20px 36px;
-}
+`;
 
-.nav__logo {
+export const navLogo = styled.div`
   width: 113.33px;
   height: 43px;
   padding: 13px 0 13px 0;
   background-color: transparent;
   margin-bottom: 20px;
-}
+`;
 
-.nav__burger {
+export const logoImage = styled.img`
+  width: 113.33px;
+  height: 17px;
+  color: #181818;
+`;
+
+export const navBurger = styled.button`
   width: 20px;
   height: 36px;
   padding: 13px 0;
@@ -28,26 +36,20 @@
   justify-content: space-between;
   background: none;
   border: none;
-}
+`;
 
-.nav__menu {
-  display: block;
-  visibility: visible;
-}
-
-.logo__image {
-  width: 113.33px;
-  height: 17px;
-  color: #181818;
-}
-
-.burger__line {
+export const burgerLine = styled.span`
   display: inline-block;
   width: 100%;
   height: 1px;
   background-color: #d3d3d3;
-}
+`;
 
-.menu__list {
+export const navMenu = styled.div`
+  display: block;
+  visibility: visible;
+`;
+
+export const menuList = styled.ul`
   padding: 18px 0 10px 0;
-}
+`;

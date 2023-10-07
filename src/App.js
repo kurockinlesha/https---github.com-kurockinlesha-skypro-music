@@ -1,40 +1,26 @@
-import "./App.css";
-import { useState, useEffect } from "react";
-import { AudioPlayer } from "./components/AudioPlayer/AudioPlayer";
-import { NavMenu } from "./components/NavMenu/NavMenu";
-import { Sidebar } from "./components/Sidebar/Sidebar";
-import { TrackList } from "./components/TrackList/TrackList";
+import { useState } from "react";
+import { AppRoutes } from "./components/routes/routes";
 
 function App() {
-  const [isLoading, setLoading] = useState(false);
+  const [user, setUser] = useState(false);
+  console.log(localStorage);
+  console.log(user);
 
-  useEffect(() => {
-    if (!isLoading) {
-      const timer = setTimeout(() => {
-        setLoading(true);
-      }, 5000);
+  const handleSignIn = () => {
+    localStorage.setItem("user", "true");
+    const curentLocalStorage = localStorage.getItem("user");
+    console.log(curentLocalStorage);
+    setUser(curentLocalStorage);
+  };
 
-      return () => clearTimeout(timer);
-    }
+  // const handleSignUp = () => {
+  //   localStorage.removeItem("user");
+  //   const curentLocalStorage = localStorage.getItem("user");
+  //   console.log(curentLocalStorage);
+  //   setUser(curentLocalStorage);
+  // };
 
-    console.log(isLoading);
-  }, [isLoading]);
-
-  return (
-    <div className="App">
-      <div className="wrapper">
-        <div className="container">
-          <main className="main">
-            <NavMenu />
-            <TrackList isLoading={isLoading} />
-            <Sidebar isLoading={isLoading} />
-          </main>
-          <AudioPlayer isLoading={isLoading}/>
-          <footer className="footer" />
-        </div>
-      </div>
-    </div>
-  );
+  return <AppRoutes user={user} onAuthButtonClick={handleSignIn} />;
 }
 
 export default App;

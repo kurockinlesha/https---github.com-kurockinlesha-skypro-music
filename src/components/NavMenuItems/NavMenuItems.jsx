@@ -1,14 +1,11 @@
-import "./NavMenuItems.css";
-import { BrowserRouter, Link } from "react-router-dom";
+import * as S from "./NavMenuItems.styles";
 
 export function NavMenuItems(props) {
   return (
-    <li className="menu__item">
-      <BrowserRouter>
-        <Link href={props.item.link} className="menu__link">
+    <S.menuItem>
+        <S.menuLink to={props.item.link} className="menu__link">
           {props.item.text}
-        </Link>
-      </BrowserRouter>
-    </li>
+        </S.menuLink>
+    </S.menuItem>
   );
 }

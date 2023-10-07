@@ -1,16 +1,16 @@
-import "./TrackListTitle.css";
+import * as S from "./TrackListTitle.style";
 
 export function TrackListTitle() {
     return (
-        <div className="content__title playlist-title">
-          <div className="playlist-title__col col01">Трек</div>
-          <div className="playlist-title__col col02">ИСПОЛНИТЕЛЬ</div>
-          <div className="playlist-title__col col03">АЛЬБОМ</div>
-          <div className="playlist-title__col col04">
-            <svg className="playlist-title__svg" alt="time">
+        <S.contentTitle>
+          <S.col01>Трек</S.col01>
+          <S.col02>ИСПОЛНИТЕЛЬ</S.col02>
+          <S.col03>АЛЬБОМ</S.col03>
+          <S.col04>
+            <S.playlistTitleSvg alt="time">
               <use xlinkHref="img/icon/sprite.svg#icon-watch" />
-            </svg>
-          </div>
-        </div>
+            </S.playlistTitleSvg>
+          </S.col04>
+        </S.contentTitle>
     )
 }

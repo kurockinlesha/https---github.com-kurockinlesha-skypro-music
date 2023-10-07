@@ -1,30 +1,33 @@
-import { SidebarItems } from "../SidebarItems/SidebarItems";
-import "./Sidebar.css";
+import * as S from "./Sidebar.style";
+import { playListArr } from "../../utils/playListArr";
+import { SkeletonSidebar } from "../TrackListItem/Tracks.style";
 
 export function Sidebar({ isLoading }) {
+  const categoryPlayList = playListArr.map((category) => (
+    <S.SidebarItem key={category.id}>
+      {isLoading ? (
+        <S.SidebarLink to={`/category/${category.id}`}>
+          <S.SidebarImg src={category.img} alt={category.alt} />
+        </S.SidebarLink>
+      ) : (
+        <SkeletonSidebar> </SkeletonSidebar>
+      )}
+    </S.SidebarItem>
+  ));
+
   return (
-    <div className="main__sidebar sidebar">
-      <div className="sidebar__personal">
-        <p className="sidebar__personal-name">Sergey.Ivanov</p>
-        <div className="sidebar__icon">
+    <S.mainSidebar>
+      <S.sidebarPersonal>
+        <S.sidebarPersonalName>Sergey.Ivanov</S.sidebarPersonalName>
+        <S.sidebarIcon>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout" />
           </svg>
-        </div>
-      </div>
-      <div className="sidebar__block">
-        <div className="sidebar__list">
-          <SidebarItems
-            item={{ link: "#", img: "img/playlist01.png", loading: isLoading }}
-          />
-          <SidebarItems
-            item={{ link: "#", img: "img/playlist02.png", loading: isLoading }}
-          />
-          <SidebarItems
-            item={{ link: "#", img: "img/playlist03.png", loading: isLoading }}
-          />
-        </div>
-      </div>
-    </div>
+        </S.sidebarIcon>
+      </S.sidebarPersonal>
+      <S.sidebarBlock>
+        <S.sidebarList>{categoryPlayList}</S.sidebarList>
+      </S.sidebarBlock>
+    </S.mainSidebar>
   );
 }
