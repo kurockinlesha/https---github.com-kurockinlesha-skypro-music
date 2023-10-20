@@ -13,6 +13,7 @@ function App() {
     setUser(curentLocalStorage);
   };
 
+
   // const handleSignUp = () => {
   //   localStorage.removeItem("user");
   //   const curentLocalStorage = localStorage.getItem("user");

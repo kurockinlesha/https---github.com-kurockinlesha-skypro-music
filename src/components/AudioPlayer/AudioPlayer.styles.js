@@ -5,8 +5,9 @@ export const bar = styled.div`
   bottom: 0;
   left: 0;
   width: 100%;
-  background: rgba(28, 28, 28, 0.5);
+  background: rgba(28, 28, 28, 0.9);
 `;
+
 
 export const barContent = styled.div`
   display: -webkit-box;

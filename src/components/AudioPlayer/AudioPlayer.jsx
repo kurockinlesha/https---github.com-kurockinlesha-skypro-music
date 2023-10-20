@@ -2,7 +2,7 @@ import * as S from "./AudioPlayer.styles";
 import { SkeletonPlayBar } from "../TrackListItem/Tracks.style";
 import { AudioPlayerIcons } from "../AdioPlayerIcons/AudioPlayerIcons";
 
-export function AudioPlayer({ isLoading }) {
+export function AudioPlayer({ isLoading, currentTrack }) {
   return (
     <S.bar>
       <S.barContent>
@@ -27,7 +27,7 @@ export function AudioPlayer({ isLoading }) {
                 {isLoading ? (
                   <S.trackPlayAuthor>
                     <S.trackPlayAuthorLink href="http://">
-                      Ты та...
+                    {currentTrack.name}
                     </S.trackPlayAuthorLink>
                   </S.trackPlayAuthor>
                 ) : (
@@ -37,7 +37,7 @@ export function AudioPlayer({ isLoading }) {
                 {isLoading ? (
                   <S.trackPlayAlbum>
                     <S.trackPlayAlbumLink href="http://">
-                      Баста
+                      {currentTrack.author}
                     </S.trackPlayAlbumLink>
                   </S.trackPlayAlbum>
                 ) : (
@@ -66,7 +66,8 @@ export function AudioPlayer({ isLoading }) {
                 </S.volumeSvg>
               </S.volumeImage>
               <S.volumeProgress>
-                <S.volumeProgressLine $style="input"
+                <S.volumeProgressLine
+                  $style="input"
                   className="volume__progress-line _btn"
                   type="range"
                   name="range"

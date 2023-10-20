@@ -20,8 +20,8 @@ export function AppRoutes({ user, onAuthButtonClick }) {
         <Route path="/" element={<Main />} />
         <Route path="/favorites" element={<Favorites />} />
         <Route path="/category/:id" element={<Category />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
-      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

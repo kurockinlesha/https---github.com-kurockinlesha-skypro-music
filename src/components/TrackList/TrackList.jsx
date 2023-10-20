@@ -3,7 +3,12 @@ import { Tracks } from "../TrackListItem/Tracks";
 import { TrackListTitle } from "../TracklistTitle/TrackListTitle";
 import { TrackListFilter } from "../TrackListFilter/TrackListFilter";
 
-export function TrackList({ isLoading }) {
+export function TrackList({
+  isLoading,
+  tracks,
+  handleCurrentTrack,
+  loadingTracksError,
+}) {
   return (
     <S.MainCenterBlock>
       <S.CenterBlockSearch>
@@ -16,7 +21,15 @@ export function TrackList({ isLoading }) {
       <TrackListFilter />
       <S.centerblockContent>
         <TrackListTitle />
-        <Tracks isLoading={isLoading} />
+        {loadingTracksError ? (
+          <div>Не удалось загрузить плейлист, попробуйте позже</div>
+        ) : (
+          <Tracks
+            isLoading={isLoading}
+            tracks={tracks}
+            handleCurrentTrack={handleCurrentTrack}
+          />
+        )}
       </S.centerblockContent>
     </S.MainCenterBlock>
   );

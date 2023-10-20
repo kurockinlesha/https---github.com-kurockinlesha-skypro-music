@@ -26,7 +26,10 @@ export function Error404() {
           Возможно, она была удалена
           <br /> или перенесена на другой адрес
         </S.notFoundBlockText>
-        <S.notFoundBlockButton type="button" onClick={() => navigate("/")}>
+        <S.notFoundBlockButton
+          type="button"
+          onClick={(() => navigate("/"), { replace: false })}
+        >
           Вернуться на главную
         </S.notFoundBlockButton>
       </S.notFoundBlock>
