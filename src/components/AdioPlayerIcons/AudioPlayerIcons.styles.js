@@ -7,6 +7,9 @@ const icons = {
   play: css`
     margin-right: 23px;
   `,
+  pause: css`
+    margin-right: 23px;
+  `,
   next: css`
     margin-right: 28px;
     fill: #a53939;
@@ -37,7 +40,6 @@ export const playerBtn = styled.div`
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-
   ${(props) => playerBtnMixin(props.$style)};
 `;
 
@@ -51,6 +53,12 @@ const iconsSvg = {
     height: 20px;
     fill: #d9d9d9;
   `,
+
+  pause: css`
+    width: 22px;
+    height: 20px;
+    flex-shrink: 0;
+  `,
   next: css`
     width: 15px;
     height: 14px;
@@ -61,7 +69,7 @@ const iconsSvg = {
     width: 18px;
     height: 12px;
     fill: transparent;
-    stroke: #696969;
+    stroke: ${(props) => (props.$active ? '#FFFFFF' : '#696969')};
   `,
   shuffle: css`
     width: 19px;
@@ -79,10 +87,13 @@ const playerBtnSvgMixin = (alt) => {
 export const playerBtnSvg = styled.svg`
   width: 15px;
   height: 14px;
+  transition: all 0.3s;
+  transform: ${(props) => (props.$active ? "scale(1.3)" : "scale(1.1)")};
   &:hover {
     fill: transparent;
     stroke: #acacac;
     cursor: pointer;
+    transform: scale(1.3);
   }
   &:active {
     fill: transparent;

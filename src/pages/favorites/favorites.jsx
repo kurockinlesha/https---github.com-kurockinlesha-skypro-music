@@ -1,5 +1,5 @@
 import * as S from "../main/main.style";
-import { AudioPlayer } from "../../components/AudioPlayer/AudioPlayer";
+// import { AudioPlayer } from "../../components/AudioPlayer/AudioPlayer";
 
 export function Favorites() {
   return (
@@ -8,7 +8,7 @@ export function Favorites() {
         <S.main>
           <h1>FavoritesPages</h1>
         </S.main>
-        <AudioPlayer />
+        {/* <AudioPlayer /> */}
         <footer className="footer" />
       </S.container>
     </S.wrapper>

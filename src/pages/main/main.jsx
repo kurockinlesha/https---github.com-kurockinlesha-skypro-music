@@ -27,15 +27,12 @@ export function Main() {
   useEffect(() => {
     getTracksAll()
       .then((track) => {
-        console.log(track);
         setTracks(track);
       })
       .catch((error) => {
         setLoadingTracksError(error.message);
       });
   }, []);
-
-  console.log(tracks);
 
   return (
     <div className="App">
@@ -49,10 +46,16 @@ export function Main() {
               handleCurrentTrack={handleCurrentTrack}
               loadingTracksError={loadingTracksError}
             />
-            <Sidebar isLoading={isLoading} loadingTracksError={loadingTracksError}/>
+            <Sidebar
+              isLoading={isLoading}
+              loadingTracksError={loadingTracksError}
+            />
           </S.main>
           {currentTrack && (
-            <AudioPlayer isLoading={isLoading} currentTrack={currentTrack} />
+            <AudioPlayer
+              isLoading={isLoading}
+              currentTrack={currentTrack}
+            />
           )}
           <footer className="footer" />
         </S.container>
