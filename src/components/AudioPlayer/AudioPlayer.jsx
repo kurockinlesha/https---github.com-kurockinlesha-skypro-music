@@ -1,7 +1,8 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { useRef, useState, useEffect } from "react";
 import * as S from "./AudioPlayer.styles";
 import { SkeletonPlayBar } from "../TrackListItem/Tracks.style";
-import { AudioPlayerIcons } from "../AdioPlayerIcons/AudioPlayerIcons";
+import { AudioPlayerIcons } from "../AudioPlayerIcons/AudioPlayerIcons";
 import { AudioVolume } from "../AudioVolume/AudioVolume";
 import { BarPlayerProgress } from "../AudioPlayerProgress/AudioPlayerProgress";
 
@@ -10,7 +11,6 @@ export function AudioPlayer({ isLoading, currentTrack }) {
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
-  console.log(audioRef);
 
   const handleStart = () => {
     audioRef.current.play();

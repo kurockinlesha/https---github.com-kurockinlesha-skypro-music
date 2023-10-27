@@ -4,7 +4,7 @@ import { AudioPlayer } from "../../components/AudioPlayer/AudioPlayer";
 import { NavMenu } from "../../components/NavMenu/NavMenu";
 import { Sidebar } from "../../components/Sidebar/Sidebar";
 import { TrackList } from "../../components/TrackList/TrackList";
-import { getTracksAll } from "../../Api";
+import { getTracksAll } from "../../api/Api";
 
 export function Main() {
   const [isLoading, setLoading] = useState(false);

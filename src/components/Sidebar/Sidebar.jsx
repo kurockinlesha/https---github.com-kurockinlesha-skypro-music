@@ -1,6 +1,8 @@
+import { useContext } from "react";
 import * as S from "./Sidebar.style";
 import { playListArr } from "../../utils/playListArr";
 import { SkeletonSidebar } from "../TrackListItem/Tracks.style";
+import { UserContext } from "../Context/Context";
 
 export function Sidebar({ isLoading, loadingTracksError }) {
   const categoryPlayList = playListArr.map((category) => (
@@ -15,11 +17,17 @@ export function Sidebar({ isLoading, loadingTracksError }) {
     </S.SidebarItem>
   ));
 
+  const { user, handleLogout } = useContext(UserContext);
+  // const handleLogout = () => {
+  //   localStorage.removeItem("user");
+  //   window.location.href = "/auth";
+  // };
+
   return (
     <S.mainSidebar>
       <S.sidebarPersonal>
-        <S.sidebarPersonalName>Sergey.Ivanov</S.sidebarPersonalName>
-        <S.sidebarIcon>
+        <S.sidebarPersonalName>{user}</S.sidebarPersonalName>
+        <S.sidebarIcon onClick={handleLogout}>
           <svg alt="logout">
             <use xlinkHref="img/icon/sprite.svg#logout" />
           </svg>

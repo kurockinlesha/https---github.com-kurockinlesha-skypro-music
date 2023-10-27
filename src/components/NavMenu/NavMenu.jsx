@@ -1,10 +1,12 @@
-import { useState } from "react";
-import * as S from "./NavMenu.styles"
+import { useState, useContext } from "react";
+import * as S from "./NavMenu.styles";
 import { NavMenuItems } from "../NavMenuItems/NavMenuItems";
+import { UserContext } from "../Context/Context";
 
 export function NavMenu() {
   const [visible, setVisible] = useState(false);
   const toggleVisibility = () => setVisible(!visible);
+  const { handleLogout } = useContext(UserContext);
   return (
     <S.mainNav>
       <S.navLogo>
@@ -20,7 +22,10 @@ export function NavMenu() {
           <S.menuList>
             <NavMenuItems item={{ link: "/", text: "Главное" }} />
             <NavMenuItems item={{ link: "/favorites", text: "Мой плейлист" }} />
-            <NavMenuItems item={{ link: "/signIn", text: "Выйти" }} />
+            <NavMenuItems
+              item={{ link: "/auth", text: "Выйти" }}
+              handleLogout={handleLogout}
+            />
           </S.menuList>
         </S.navMenu>
       )}
