@@ -1,13 +1,21 @@
-// import logo from "./logo.svg";
-import "./App.css";
+/* eslint-disable react/jsx-no-constructed-context-values */
+import { useState } from "react";
+import { AppRoutes } from "./components/routes/routes";
+import { UserContext } from "./components/Context/Context";
 
 function App() {
+  const [user, setUser] = useState(
+    localStorage.getItem("user") || null
+  );
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    window.location.href = "/auth";
+  };
   return (
-    <div className="App">
-        <p>
-         Здесь скоро будет Skypro.Music
-        </p>
-    </div>
+    <UserContext.Provider value={{ user, handleLogout }}>
+      <AppRoutes user={user} setUser={setUser} />
+    </UserContext.Provider>
   );
 }
 
