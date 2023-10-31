@@ -21,7 +21,7 @@ export function NavMenu() {
         <S.navMenu>
           <S.menuList>
             <NavMenuItems item={{ link: "/", text: "Главное" }} />
-            <NavMenuItems item={{ link: "/favorites", text: "Мой плейлист" }} />
+            <NavMenuItems item={{ link: "/favourites", text: "Мой плейлист" }} />
             <NavMenuItems
               item={{ link: "/auth", text: "Выйти" }}
               handleLogout={handleLogout}

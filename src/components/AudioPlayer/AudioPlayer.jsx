@@ -1,31 +1,61 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/media-has-caption */
 import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import * as S from "./AudioPlayer.styles";
 import { SkeletonPlayBar } from "../TrackListItem/Tracks.style";
 import { AudioPlayerIcons } from "../AudioPlayerIcons/AudioPlayerIcons";
 import { AudioVolume } from "../AudioVolume/AudioVolume";
 import { BarPlayerProgress } from "../AudioPlayerProgress/AudioPlayerProgress";
+import {
+  isPlayingSelector,
+  allTracksSelector,
+  indexCurrentTrackSelector,
+  shuffledSelector,
+  shuffledAllTracksSelector,
+} from "../../store/selectors/tracks";
+import {
+  setIsPlaying,
+  setNextTrack,
+  setPrevTrack,
+  toggleShuffleTracks,
+} from "../../store/actions/creators/tracks";
 
 export function AudioPlayer({ isLoading, currentTrack }) {
-  const [isPlaying, setIsPlaying] = useState(false);
+  const dispatch = useDispatch();
+  const isPlaying = useSelector(isPlayingSelector);
+  const shuffled = useSelector(shuffledSelector);
+  const shuffledAllTracks = useSelector(shuffledAllTracksSelector);
+  const tracks = useSelector(allTracksSelector);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
+  const indexCurrentTrack = useSelector(indexCurrentTrackSelector);
 
   const handleStart = () => {
     audioRef.current.play();
-    setIsPlaying(true);
+    dispatch(setIsPlaying(true));
   };
   const handleStop = () => {
     audioRef.current.pause();
-    setIsPlaying(false);
+    dispatch(setIsPlaying(false));
   };
+
   const togglePlay = isPlaying ? handleStop : handleStart;
+  const arrayTracksAll = shuffled ? shuffledAllTracks : tracks;
 
   useEffect(() => {
     handleStart();
     audioRef.current.onended = () => {
-      setIsPlaying(false);
+      if (indexCurrentTrack < arrayTracksAll.length - 1) {
+        dispatch(
+          setNextTrack(
+            arrayTracksAll[indexCurrentTrack + 1],
+            indexCurrentTrack + 1
+          )
+        );
+      }
+      dispatch(setIsPlaying(false));
     };
   }, [currentTrack]);
 
@@ -41,6 +71,22 @@ export function AudioPlayer({ isLoading, currentTrack }) {
   const toggleTrackRepeat = () => {
     audioRef.current.loop = !repeatTrack;
     setRepeatTrack(!repeatTrack);
+  };
+  const toggleCurrentTrack = (alt) => {
+    if (alt === "next" && indexCurrentTrack < arrayTracksAll.length - 1) {
+      const indexNextTrack = arrayTracksAll.indexOf(currentTrack) + 1;
+      console.log("Next", arrayTracksAll[indexNextTrack]);
+      return dispatch(
+        setNextTrack(arrayTracksAll[indexNextTrack], indexNextTrack)
+      );
+    }
+    if (alt === "prev" && indexCurrentTrack > 0) {
+      const indexPredTrack = arrayTracksAll.indexOf(currentTrack) - 1;
+      console.log("Prev", arrayTracksAll[indexPredTrack]);
+      return dispatch(
+        setPrevTrack(arrayTracksAll[indexPredTrack], indexPredTrack)
+      );
+    }
   };
 
   return (
@@ -63,7 +109,7 @@ export function AudioPlayer({ isLoading, currentTrack }) {
               <AudioPlayerIcons
                 alt="prev"
                 click={() => {
-                  alert("Еще не реализовано");
+                  toggleCurrentTrack("prev");
                 }}
               />
               <AudioPlayerIcons
@@ -73,18 +119,14 @@ export function AudioPlayer({ isLoading, currentTrack }) {
               <AudioPlayerIcons
                 alt="next"
                 click={() => {
-                  alert("Еще не реализовано");
+                  toggleCurrentTrack("next");
                 }}
               />
-              <AudioPlayerIcons
-                alt="repeat"
-                click={toggleTrackRepeat}
-                repeatTrack={repeatTrack}
-              />
+              <AudioPlayerIcons alt="repeat" click={toggleTrackRepeat} />
               <AudioPlayerIcons
                 alt="shuffle"
                 click={() => {
-                  alert("Еще не реализовано");
+                  dispatch(toggleShuffleTracks(!shuffled));
                 }}
               />
             </S.playerControls>

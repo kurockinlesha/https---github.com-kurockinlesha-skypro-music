@@ -29,6 +29,8 @@
     ],
     "consistent-return": "off",
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
+    "react-hooks/exhaustive-deps": "warn",
+    "default-param-last": 0,
+    "no-param-reassign": "off"
   }
 }

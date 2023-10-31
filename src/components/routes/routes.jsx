@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { Main } from "../../pages/main/main";
 import { NotFound } from "../../pages/notFound/notFound";
-import { Favorites } from "../../pages/favorites/favorites";
+import { Favourites } from "../../pages/favourites/favourites";
 import { Category } from "../../pages/category/category";
 import { AuthPage } from "../../pages/auth/auth";
 import { ProtectedRoute } from "./ProtectedRoute";
@@ -13,7 +13,7 @@ export function AppRoutes({ setUser, user }) {
 
       <Route element={<ProtectedRoute isAllowed={Boolean(user)} />}>
         <Route path="/" element={<Main />} />
-        <Route path="/favorites" element={<Favorites />} />
+        <Route path="/favourites" element={<Favourites />} />
         <Route path="/category/:id" element={<Category />} />
       </Route>
       <Route path="*" element={<NotFound />} />

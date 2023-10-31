@@ -1,12 +1,12 @@
 import * as S from "../main/main.style";
 // import { AudioPlayer } from "../../components/AudioPlayer/AudioPlayer";
 
-export function Favorites() {
+export function Favourites() {
   return (
     <S.wrapper>
       <S.container>
         <S.main>
-          <h1>FavoritesPages</h1>
+          <h1>FavouritesPages</h1>
         </S.main>
         {/* <AudioPlayer /> */}
         <footer className="footer" />

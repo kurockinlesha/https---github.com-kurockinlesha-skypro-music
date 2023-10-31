@@ -1,14 +1,26 @@
+import { useSelector } from "react-redux";
 import * as S from "./Tracks.style";
+import {
+  currentTrackSelector,
+  isPlayingSelector,
+} from "../../store/selectors/tracks";
 
 export function Tracks({ isLoading, tracks, handleCurrentTrack }) {
+  const currentTrack = useSelector(currentTrackSelector);
+  const isPlaying = useSelector(isPlayingSelector);
+
   const trackItems = tracks.map((track) => (
     <S.playlistItem key={track.id} onClick={() => handleCurrentTrack(track)}>
       <S.playlistTrack>
         <S.trackTitle>
           <S.trackTitleImage>
-            <S.trackTitleSvg alt="music">
-              <use xlinkHref="img/icon/sprite.svg#icon-note" />
-            </S.trackTitleSvg>
+            {currentTrack && currentTrack.id === track.id ? (
+              <S.PointPlaying $playing={isPlaying} />
+            ) : (
+              <S.trackTitleSvg alt="music">
+                <use xlinkHref="img/icon/sprite.svg#icon-note" />
+              </S.trackTitleSvg>
+            )}
           </S.trackTitleImage>
 
           {isLoading ? (
