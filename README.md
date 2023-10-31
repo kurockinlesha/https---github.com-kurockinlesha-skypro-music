@@ -1,3 +1,7 @@
+Мои рассуждения по оценке работы над приложением:
+1) Авторизация и регистрациия в приложении Skypro.Music: плановая оценка 16ч - фактически затраченное время 10ч
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
