@@ -1,5 +1,9 @@
 import { styled } from "styled-components";
 
+export const MainCenterBlock = styled.div`
+  width: auto;
+  flex-grow: 3;
+`;
 export const notFoundBlock = styled.div`
   margin-top: 285px;
   display: flex;

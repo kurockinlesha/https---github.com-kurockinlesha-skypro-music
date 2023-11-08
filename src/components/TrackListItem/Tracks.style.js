@@ -147,12 +147,9 @@ export const trackAlbumLink = styled(Link)`
   color: #696969;
 `;
 
-export const trackTimeSvg = styled.svg`
-  width: 14px;
-  height: 12px;
-  margin-right: 17px;
-  fill: transparent;
-  stroke: #696969;
+export const trackTime = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const trackTimeText = styled.span`
@@ -187,4 +184,12 @@ export const PointPlaying = styled.div`
   background-color: #b672ff;
   border-radius: 50%;
   ${(props) => (props.$playing ? animationPointPulse : "")};
+`;
+
+export const trackTimeSvg = styled.svg`
+  width: 14px;
+  height: 12px;
+  margin-right: 17px;
+  fill: transparent;
+  stroke: #696969;
 `;

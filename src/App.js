@@ -8,16 +8,21 @@ import { store } from "./store/store";
 
 function App() {
   const [user, setUser] = useState(localStorage.getItem("user") || null);
-
+ 
   const handleLogout = () => {
-    localStorage.removeItem("user");
+    localStorage.removeItem("auth");
+    localStorage.removeItem("user"); 
     window.location.href = "/auth";
   };
+
   return (
     <UserContext.Provider value={{ user, handleLogout }}>
       <Provider store={store}>
         <BrowserRouter>
-          <AppRoutes user={user} setUser={setUser} />
+          <AppRoutes
+            user={user}
+            setUser={setUser}
+          />
         </BrowserRouter>
       </Provider>
     </UserContext.Provider>

@@ -69,13 +69,20 @@ const iconsSvg = {
     width: 18px;
     height: 12px;
     fill: transparent;
-    stroke: ${(props) => (props.$active ? '#FFFFFF' : '#696969')};
+    stroke: ${(props) => (props.$active ? "#FFFFFF" : "#696969")};
   `,
   shuffle: css`
     width: 19px;
     height: 12px;
     fill: transparent;
-    stroke: ${(props) => (props.$active ? '#FFFFFF' : '#696969')};
+    stroke: ${(props) => (props.$active ? "#FFFFFF" : "#696969")};
+  `,
+  like: css`
+    width: 14px;
+    height: 12px;
+    margin-right: 17px;
+    fill: ${(props) => (props.$active ? "#B672FF" : "none")};
+    stroke: ${(props) => (props.$active ? "#B672FF" : "#696969")};
   `,
 };
 

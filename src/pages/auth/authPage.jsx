@@ -1,31 +1,54 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { registrationUserApi, loginUserApi } from "../../api/ApiUsersLogin";
-import * as S from "./auth.style";
+import * as S from "./authPage.style";
+import { useAccessTokenUserMutation } from "../../servicesQuery/token";
+import { setAuth } from "../../store/slices/authSlice";
 
 export function AuthPage({ setUser }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [offButton, setOffButton] = useState(false);
   const [isLoginMode, setIsLoginMode] = useState(false);
+  const [postToken] = useAccessTokenUserMutation();
+  // const { refreshToken } = useSelector((store) => store.token);
 
+  const responseToken = async () => {
+    await postToken({ email, password })
+      .unwrap()
+      .then((token) => {
+        console.log("token", token);
+        dispatch(
+          setAuth({
+            access: token.access,
+            refresh: token.refresh,
+            user: JSON.parse(localStorage.getItem("user")),
+          })
+        );
+      });
+  };
   const handleLogin = async () => {
     try {
       const response = await loginUserApi(email, password);
-      console.log(email);
       console.log(response.username);
-      setUser(response.username);
-      localStorage.setItem("user", response.username);
+      setUser(response);
+      localStorage.setItem("user", JSON.stringify(response));
+      responseToken();
       setOffButton(true);
-      window.location.href = "/";
+      navigate("/");
     } catch (currentError) {
       setError(currentError.message);
     } finally {
       setOffButton(false);
     }
+
+   
   };
 
   const handleRegister = async () => {
@@ -36,9 +59,10 @@ export function AuthPage({ setUser }) {
         const response = await registrationUserApi(email, password);
         console.log(response);
         setOffButton(true);
-        setUser(response.username);
-        localStorage.setItem("user", response.username);
-        window.location.href = "/";
+        setUser(response);
+        localStorage.setItem("user", JSON.stringify(response));
+        responseToken();
+        navigate("/");
       } catch (currentError) {
         setError(currentError.message);
         console.log(error);

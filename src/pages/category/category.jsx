@@ -15,9 +15,8 @@ export function Category() {
       <S.container>
         <S.main>
           <h1>CategoryPage {category.id}</h1>
-          <img src={category.img} alt={category.alt} />
+          {/* <img src={category.img} alt={category.alt} /> */}
         </S.main>
-        {/* <AudioPlayer /> */}
         <footer className="footer" />
       </S.container>
     </S.wrapper>

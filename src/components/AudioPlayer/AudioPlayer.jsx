@@ -9,7 +9,7 @@ import { AudioVolume } from "../AudioVolume/AudioVolume";
 import { BarPlayerProgress } from "../AudioPlayerProgress/AudioPlayerProgress";
 import {
   isPlayingSelector,
-  allTracksSelector,
+  currentPlaylistSelector,
   indexCurrentTrackSelector,
   shuffledSelector,
   shuffledAllTracksSelector,
@@ -19,14 +19,14 @@ import {
   setNextTrack,
   setPrevTrack,
   toggleShuffleTracks,
-} from "../../store/actions/creators/tracks";
+} from "../../store/slices/tracksSlice";
 
 export function AudioPlayer({ isLoading, currentTrack }) {
   const dispatch = useDispatch();
   const isPlaying = useSelector(isPlayingSelector);
   const shuffled = useSelector(shuffledSelector);
   const shuffledAllTracks = useSelector(shuffledAllTracksSelector);
-  const tracks = useSelector(allTracksSelector);
+  const tracks = useSelector(currentPlaylistSelector);
   const [timeProgress, setTimeProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const audioRef = useRef(null);
@@ -49,10 +49,10 @@ export function AudioPlayer({ isLoading, currentTrack }) {
     audioRef.current.onended = () => {
       if (indexCurrentTrack < arrayTracksAll.length - 1) {
         dispatch(
-          setNextTrack(
-            arrayTracksAll[indexCurrentTrack + 1],
-            indexCurrentTrack + 1
-          )
+          setNextTrack({
+            trackNext: arrayTracksAll[arrayTracksAll.indexOf(currentTrack) + 1],
+            indexNextTrack: arrayTracksAll.indexOf(currentTrack) + 1,
+          })
         );
       }
       dispatch(setIsPlaying(false));
@@ -77,14 +77,20 @@ export function AudioPlayer({ isLoading, currentTrack }) {
       const indexNextTrack = arrayTracksAll.indexOf(currentTrack) + 1;
       console.log("Next", arrayTracksAll[indexNextTrack]);
       return dispatch(
-        setNextTrack(arrayTracksAll[indexNextTrack], indexNextTrack)
+        setNextTrack({
+          trackNext: arrayTracksAll[indexNextTrack],
+          indexNextTrack,
+        })
       );
     }
     if (alt === "prev" && indexCurrentTrack > 0) {
       const indexPredTrack = arrayTracksAll.indexOf(currentTrack) - 1;
-      console.log("Prev", arrayTracksAll[indexPredTrack]);
+      console.log("Pred", arrayTracksAll[indexPredTrack]);
       return dispatch(
-        setPrevTrack(arrayTracksAll[indexPredTrack], indexPredTrack)
+        setPrevTrack({
+          trackPred: arrayTracksAll[indexPredTrack],
+          indexPredTrack,
+        })
       );
     }
   };
@@ -122,12 +128,17 @@ export function AudioPlayer({ isLoading, currentTrack }) {
                   toggleCurrentTrack("next");
                 }}
               />
-              <AudioPlayerIcons alt="repeat" click={toggleTrackRepeat} />
+              <AudioPlayerIcons
+                alt="repeat"
+                click={toggleTrackRepeat}
+                isActive={repeatTrack}
+              />
               <AudioPlayerIcons
                 alt="shuffle"
                 click={() => {
                   dispatch(toggleShuffleTracks(!shuffled));
                 }}
+                isActive={shuffled}
               />
             </S.playerControls>
             <S.playerTrackPlay>
@@ -138,24 +149,24 @@ export function AudioPlayer({ isLoading, currentTrack }) {
                   </S.trackPlaySvg>
                 </S.trackPlayImage>
 
-                {isLoading ? (
+                {!isLoading ? (
                   <S.trackPlayAuthor>
                     <S.trackPlayAuthorLink href="http://">
                       {currentTrack.name}
                     </S.trackPlayAuthorLink>
                   </S.trackPlayAuthor>
                 ) : (
-                  <SkeletonPlayBar> </SkeletonPlayBar>
+                  <SkeletonPlayBar />
                 )}
 
-                {isLoading ? (
+                {!isLoading ? (
                   <S.trackPlayAlbum>
                     <S.trackPlayAlbumLink href="http://">
                       {currentTrack.author}
                     </S.trackPlayAlbumLink>
                   </S.trackPlayAlbum>
                 ) : (
-                  <SkeletonPlayBar> </SkeletonPlayBar>
+                  <SkeletonPlayBar />
                 )}
               </S.trackPlayContain>
               <S.trackPlayLikeDis>
