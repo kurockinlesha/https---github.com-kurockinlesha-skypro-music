@@ -1,4 +1,4 @@
-export function getDurationAudio(duration) {
+export default function getDurationAudio(duration) {
   const min = Math.floor(duration / 60);
   const sec = Math.floor(duration % 60);
 

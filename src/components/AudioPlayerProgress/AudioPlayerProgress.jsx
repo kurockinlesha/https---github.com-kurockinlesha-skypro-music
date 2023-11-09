@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import * as S from "./AudioPlayerProgress.style";
-import { getDurationAudio } from "../../utils/durationAudio";
+import getDurationAudio from "../../utils/durationAudio";
 
 export function BarPlayerProgress({ duration, timeProgress, audioRef }) {
   return (

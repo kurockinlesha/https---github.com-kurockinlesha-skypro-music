@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
 import * as S from "./TrackList.style";
 import { Tracks } from "../TrackListItem/Tracks";
 import { TrackListTitle } from "../TracklistTitle/TrackListTitle";
@@ -10,32 +11,48 @@ import {
   currentPageSelector,
   allTracksSelector,
   favouritesTracksSelector,
+  categoryArrSelector,
+  filtersPlaylistSelector,
 } from "../../store/selectors/tracks";
 import {
   setCurrentTrack,
   setCurrentPlaylist,
   toggleShuffleTracks,
+  setFilterPlaylist,
 } from "../../store/slices/tracksSlice";
 
 export function TrackList({ title, error, isLoading, tracks, isFavorites }) {
   const dispatch = useDispatch();
   const shuffled = useSelector(shuffledSelector);
   const allTracks = useSelector(allTracksSelector);
+  const categoryArr = useSelector(categoryArrSelector);
   const favouritesTracks = useSelector(favouritesTracksSelector);
   const currentPlaylist = useSelector(currentPlaylistSelector);
   const shuffledAllTracks = useSelector(shuffledAllTracksSelector);
   const currentPage = useSelector(currentPageSelector);
   const arrayTracksAll = shuffled ? shuffledAllTracks : currentPlaylist;
+  const filtersPlaylist = useSelector(filtersPlaylistSelector);
+
+  useEffect(() => {
+    dispatch(setFilterPlaylist({ sort: "По умолчанию" }));
+    // dispatch(setFilterPlaylist({ authors: "" }));
+    // dispatch(setFilterPlaylist({ genres: "" }));
+  }, [title]);
 
   const handleCurrentTrack = (track) => {
-    // if (shuffled) {
-    if (currentPage === "Main") {
-      dispatch(setCurrentPlaylist(allTracks));
+    if (!filtersPlaylist.isActiveSort && !filtersPlaylist?.isActiveAuthors) {
+      if (currentPage === "Main") {
+        dispatch(setCurrentPlaylist(allTracks));
+      }
+      if (currentPage === "Favourites") {
+        dispatch(setCurrentPlaylist(favouritesTracks));
+      }
+      if (currentPage === "Category") {
+        dispatch(setCurrentPlaylist(categoryArr));
+      }
+    } else {
+      dispatch(setCurrentPlaylist(filtersPlaylist.filterTracksArr));
     }
-    if (currentPage === "Favourites") {
-      dispatch(setCurrentPlaylist(favouritesTracks));
-    }
-    // }
 
     if (shuffled) {
       dispatch(toggleShuffleTracks({ shuffled }));
@@ -51,7 +68,17 @@ export function TrackList({ title, error, isLoading, tracks, isFavorites }) {
       <S.centerblockH2 className="centerblock__h2">
         {title || "Треки"}
       </S.centerblockH2>
-      <TrackListFilter />
+      <TrackListFilter
+        tracks={currentPage === "Main" ? allTracks : categoryArr}
+        // tracks={
+        //   (currentPage === "Main"
+        //     ? allTracks
+        //     : (currentPage === "Favourites"
+        //     ? favouritesTracks
+        //     : categoryArr))
+        // }
+        currentPage={currentPage}
+      />
       <S.centerblockContent>
         <TrackListTitle />
         {error ? (
@@ -76,16 +103,7 @@ export function TrackList({ title, error, isLoading, tracks, isFavorites }) {
                     isLoading={isLoading}
                     track={track}
                     tracks={tracks}
-                    isFavorites={
-                      // title === "Мои треки"
-                      //   ? true
-                      //   : !!(track.stared_user ?? []).find(
-                      //       (user) => user.id === authID
-                      //     )
-                      isFavorites
-
-                      // Boolean(track?.stared_user?.find((user) => user.id === authID))
-                    }
+                    isFavorites={isFavorites}
                   />
                 </S.playlistItem>
               ))}

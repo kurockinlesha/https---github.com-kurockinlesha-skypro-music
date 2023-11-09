@@ -15,7 +15,7 @@ export function AudioPlayerIcons(props) {
         $active={props.isActive}
       >
         <use
-          xlinkHref={`img/icon/sprite.svg#icon-${props.alt}`}
+          xlinkHref={`../img/icon/sprite.svg#icon-${props.alt}`}
         />
       </S.playerBtnSvg>
     </S.playerBtn>

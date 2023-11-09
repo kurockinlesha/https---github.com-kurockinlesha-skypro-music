@@ -9,7 +9,17 @@ const initialState = {
   shuffled: false,
   shuffledAllTracks: [],
   favouritesTracks: [],
+  categoryArr: [],
   currentPlaylist: [],
+  FiltersPlaylist: {
+    authors: [],
+    isActiveAuthors: false,
+    genres: [],
+    isActiveGenres: false,
+    sort: "По умолчанию",
+    isActiveSort: false,
+    filterTracksArr: [],
+  },
 };
 
 const getShuffledAllTracks = (array) => {
@@ -27,6 +37,10 @@ export const trackSlice = createSlice({
 
     setFavouriteTracksAll: (state, action) => {
       state.favouritesTracks = action.payload;
+    },
+
+    setCategoryArr: (state, action) => {
+      state.categoryArr = action.payload;
     },
 
     setIsPlaying: (state, action) => {
@@ -66,19 +80,96 @@ export const trackSlice = createSlice({
       }
       state.shuffledAllTracks =
         state.shuffled && getShuffledAllTracks(state.currentPlaylist);
+    },
 
-      // if (!state.shuffled) {
-      //   if (state.currentPage === "Main") {
-      //     state.currentPlaylist = state.allTracks;
-      //   }
-      //   if (state.currentPage === "Favourites") {
-      //     state.currentPlaylist = state.favouritesTracks;
-      //   }
+    setFilterPlaylist: (state, action) => {
+      const { sort, authors, genres } = action.payload;
 
-      //   if (state.shuffled) {
-      //     getShuffledAllTracks(state.currentPlayList)
-      //   }
-      // }
+      if (authors) {
+        if (state.FiltersPlaylist.authors.includes(authors)) {
+          state.FiltersPlaylist.authors = state.FiltersPlaylist.authors.filter(
+            (item) => item !== authors
+          );
+        } else {
+          state.FiltersPlaylist.authors = [
+            ...state.FiltersPlaylist.authors,
+            authors,
+          ];
+        }
+      }
+
+      if (genres) {
+        if (state.FiltersPlaylist.genres.includes(genres)) {
+          state.FiltersPlaylist.genres = state.FiltersPlaylist.genres.filter(
+            (item) => item !== genres
+          );
+        } else {
+          state.FiltersPlaylist.genres = [
+            ...state.FiltersPlaylist.genres,
+            genres,
+          ];
+        }
+      }
+
+      if (sort) {
+        state.FiltersPlaylist.sort = sort;
+      }
+
+      const getFilteredTracks = () => {
+        let filterArray = [];
+        // список треков
+        if (state.currentPage === "Main") {
+          filterArray = state.allTracks;
+        }
+        if (state.currentPage === "Favoutites") {
+          filterArray = state.favouritesTracks;
+        }
+
+        if (state.currentPage === "Category") {
+          filterArray = state.categoryArr;
+        }
+
+        // фильтрация
+
+        // *по исполнителю
+        if (state.FiltersPlaylist.authors.length > 0) {
+          state.FiltersPlaylist.isActiveAuthors = true;
+
+          filterArray = filterArray.filter((track) =>
+            state.FiltersPlaylist.authors.includes(track.author)
+          );
+        }
+
+        // *по жанрам
+        if (state.FiltersPlaylist.genres.length > 0) {
+          state.FiltersPlaylist.isActiveGenres = true;
+
+          filterArray = filterArray.filter((track) =>
+            state.FiltersPlaylist.genres.includes(track.genre)
+          );
+        }
+
+        // сортировка по дате
+        if (state.FiltersPlaylist.sort === "Сначала новые") {
+          state.FiltersPlaylist.isActiveSort = true;
+
+          filterArray = filterArray.sort(
+            (a, b) => new Date(b.release_date) - new Date(a.release_date)
+          );
+        } else if (state.FiltersPlaylist.sort === "Сначала старые") {
+          state.FiltersPlaylist.isActiveSort = true;
+
+          filterArray = filterArray.sort(
+            (a, b) => new Date(a.release_date) - new Date(b.release_date)
+          );
+        } else {
+          state.FiltersPlaylist.isActiveSort = false;
+        }
+
+        return filterArray;
+      };
+
+      state.FiltersPlaylist.filterTracksArr = getFilteredTracks();
     },
   },
 });
@@ -93,6 +184,8 @@ export const {
   setFavouriteTracksAll,
   setCurrentPage,
   setCurrentPlaylist,
+  setCategoryArr,
+  setFilterPlaylist,
 } = trackSlice.actions;
 
 export default trackSlice.reducer;

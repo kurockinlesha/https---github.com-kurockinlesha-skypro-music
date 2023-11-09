@@ -20,6 +20,10 @@ import {
   setPrevTrack,
   toggleShuffleTracks,
 } from "../../store/slices/tracksSlice";
+import {
+  useSetLikeMutation,
+  useSetDislikeMutation,
+} from "../../servicesQuery/tracks";
 
 export function AudioPlayer({ isLoading, currentTrack }) {
   const dispatch = useDispatch();
@@ -94,6 +98,36 @@ export function AudioPlayer({ isLoading, currentTrack }) {
       );
     }
   };
+// лайк
+  const [setLike] = useSetLikeMutation();
+  const [setDislike] = useSetDislikeMutation();
+  const auth = JSON.parse(localStorage.getItem("user"));
+  const isUserLike = Boolean(
+    currentTrack?.stared_user?.find((user) => user.id === auth.id)
+  );
+
+  const [isLiked, setIsLiked] = useState(isUserLike);
+
+  useEffect(() => {
+    if (currentTrack?.stared_user) {
+      setIsLiked(isUserLike)
+    } else {
+      setIsLiked(true);
+    }
+  }, [isUserLike, currentTrack?.stared_user]);
+
+  const handleLike = async (id) => {
+    setIsLiked(true);
+    await setLike({ id }).unwrap();
+  };
+
+  const handleDislike = async (id) => {
+    setIsLiked(false);
+    await setDislike({ id }).unwrap();
+  };
+
+  const toggleLikeDislike = (id) =>
+    isLiked ? handleDislike(id) : handleLike(id);
 
   return (
     <S.bar>
@@ -145,7 +179,7 @@ export function AudioPlayer({ isLoading, currentTrack }) {
               <S.trackPlayContain>
                 <S.trackPlayImage>
                   <S.trackPlaySvg alt="music">
-                    <use xlinkHref="img/icon/sprite.svg#icon-note" />
+                    <use xlinkHref="../img/icon/sprite.svg#icon-note" />
                   </S.trackPlaySvg>
                 </S.trackPlayImage>
 
@@ -171,14 +205,22 @@ export function AudioPlayer({ isLoading, currentTrack }) {
               </S.trackPlayContain>
               <S.trackPlayLikeDis>
                 <S.trackPlayLike>
-                  <S.trackPlayLikeSvg alt="like">
-                    <use xlinkHref="img/icon/sprite.svg#icon-like" />
-                  </S.trackPlayLikeSvg>
+                  {/* <S.trackPlayLikeSvg alt="like">
+                    <use xlinkHref="../img/icon/sprite.svg#icon-like" />
+                  </S.trackPlayLikeSvg> */}
+
+                  <AudioPlayerIcons
+                    alt="like"
+                    click={() => {
+                      toggleLikeDislike(currentTrack?.id);
+                    }}
+                    isActive={isLiked}
+                  />
                 </S.trackPlayLike>
                 <S.trackPlayDislike>
-                  <S.trackPlayDislikeSvg alt="dislike">
-                    <use xlinkHref="img/icon/sprite.svg#icon-dislike" />
-                  </S.trackPlayDislikeSvg>
+                  {/* <S.trackPlayDislikeSvg alt="dislike">
+                    <use xlinkHref="../img/icon/sprite.svg#icon-dislike" />
+                  </S.trackPlayDislikeSvg> */}
                 </S.trackPlayDislike>
               </S.trackPlayLikeDis>
             </S.playerTrackPlay>

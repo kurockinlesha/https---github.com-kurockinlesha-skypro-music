@@ -8,7 +8,7 @@ export function TrackListTitle() {
           <S.col03>АЛЬБОМ</S.col03>
           <S.col04>
             <S.playlistTitleSvg alt="time">
-              <use xlinkHref="img/icon/sprite.svg#icon-watch" />
+              <use xlinkHref="../img/icon/sprite.svg#icon-watch" />
             </S.playlistTitleSvg>
           </S.col04>
         </S.contentTitle>

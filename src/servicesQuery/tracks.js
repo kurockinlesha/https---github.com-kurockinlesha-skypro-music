@@ -7,8 +7,6 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
     prepareHeaders: (headers, { getState }) => {
       const token = getState().auth.access;
 
-      console.log("accessToken", token);
-
       if (token) {
         headers.set("authorization", `Bearer ${token}`);
       }
@@ -61,7 +59,7 @@ const baseQueryWithReauth = async (args, api, extraOptions) => {
 
 export const tracksQuery = createApi({
   reducerPath: "tracksQuery",
-  tagTypes: ["Tracks", "Favorites"],
+  tagTypes: ["Tracks", "Favorites", "Selections"],
   baseQuery: baseQueryWithReauth,
 
   endpoints: (build) => ({
@@ -94,6 +92,7 @@ export const tracksQuery = createApi({
       invalidatesTags: [
         { type: "Favorites", id: "LIST" },
         { type: "Tracks", id: "LIST" },
+        { type: "Selections", id: "LIST" },
       ],
     }),
 
@@ -105,7 +104,19 @@ export const tracksQuery = createApi({
       invalidatesTags: [
         { type: "Favorites", id: "LIST" },
         { type: "Tracks", id: "LIST" },
+        { type: "Selections", id: "LIST" },
       ],
+    }),
+
+    getSelections: build.query({
+      query: (id) => `catalog/selection/${id}/`,
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.items.map(({ id }) => ({ type: "Selections", id })),
+              { type: "Selections", id: "LIST" },
+            ]
+          : [{ type: "Selections", id: "LIST" }],
     }),
   }),
 });
@@ -115,4 +126,5 @@ export const {
   useGetFavouriteTracksAllQuery,
   useSetLikeMutation,
   useSetDislikeMutation,
+  useGetSelectionsQuery,
 } = tracksQuery;

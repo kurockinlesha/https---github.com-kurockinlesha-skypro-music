@@ -10,6 +10,7 @@ import {
   useSetDislikeMutation,
 } from "../../servicesQuery/tracks";
 import { AudioPlayerIcons } from "../AudioPlayerIcons/AudioPlayerIcons";
+import getDurationAudion from "../../utils/durationAudio";
 
 export function Tracks({ track, isLoading, isFavorites = false }) {
   const currentTrack = useSelector(currentTrackSelector);
@@ -25,10 +26,9 @@ export function Tracks({ track, isLoading, isFavorites = false }) {
   useEffect(() => {
     if (isFavorites) {
       setIsLiked(isFavorites);
-      console.log("isFavorites", isFavorites);
     } else {
       setIsLiked(isUserLike);
-      console.log("isUserLike", isUserLike);
+      // console.log("isUserLike", isUserLike);
     }
   }, [isUserLike, isFavorites]);
 
@@ -45,16 +45,6 @@ export function Tracks({ track, isLoading, isFavorites = false }) {
   const toggleLikeDislike = (id) =>
     isLiked ? handleDislike(id) : handleLike(id);
 
-  // const handleLikeClick = () => {
-  //   if (isLiked) {
-  //     setDislike({ id: track.id });
-  //     setIsLiked(true);
-  //   } else {
-  //     setLike({ id: track.id });
-  //     setIsLiked(false);
-  //   }
-  // };
-
   return (
     <S.playlistTrack>
       <S.trackTitle>
@@ -63,7 +53,7 @@ export function Tracks({ track, isLoading, isFavorites = false }) {
             <S.PointPlaying $playing={isPlaying} />
           ) : (
             <S.trackTitleSvg alt="music">
-              <use xlinkHref="img/icon/sprite.svg#icon-note" />
+              <use xlinkHref="../img/icon/sprite.svg#icon-note" />
             </S.trackTitleSvg>
           )}
         </S.trackTitleImage>
@@ -108,7 +98,10 @@ export function Tracks({ track, isLoading, isFavorites = false }) {
             }}
             isActive={isLiked}
           />
-          <S.trackTimeText> {track.duration_in_seconds}</S.trackTimeText>
+          <S.trackTimeText>
+            {getDurationAudion(track.duration_in_seconds)}
+          </S.trackTimeText>
+          <S.trackTimeText/>
         </S.trackTime>
       )}
     </S.playlistTrack>

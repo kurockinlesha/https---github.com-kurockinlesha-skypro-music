@@ -12,16 +12,13 @@ export function Sidebar({ isLoading, loadingTracksError }) {
           <S.SidebarImg src={category.img} alt={category.alt} />
         </S.SidebarLink>
       ) : (
-        <SkeletonSidebar/>
+        <SkeletonSidebar />
       )}
     </S.SidebarItem>
   ));
 
-  const { user, handleLogout } = useContext(UserContext);
-  // const handleLogout = () => {
-  //   localStorage.removeItem("user");
-  //   window.location.href = "/auth";
-  // };
+  const { handleLogout } = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   return (
     <S.mainSidebar>

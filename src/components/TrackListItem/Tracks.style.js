@@ -159,6 +159,7 @@ export const trackTimeText = styled.span`
   line-height: 24px;
   text-align: right;
   color: #696969;
+  margin-left: 10px;
 `;
 
 const animationPointPulse = () => css`

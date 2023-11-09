@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import * as S from "./TrackListFilterCategory.style";
 
 export function TrackListFilterCategory({
@@ -5,9 +6,14 @@ export function TrackListFilterCategory({
   content,
   isActiveCategory,
   setActiveCategory,
+  numberSelectedValues,
 }) {
   const switchСategoryFilter = () =>
     setActiveCategory(isActiveCategory === nameCategory ? "" : nameCategory);
+
+  useEffect(() => {
+    console.log("numberSelectedValues", numberSelectedValues);
+  }, [numberSelectedValues]);
 
   return (
     <S.filterCategoryName>
@@ -18,6 +24,9 @@ export function TrackListFilterCategory({
       >
         {nameCategory}
       </S.filterButton>
+      {numberSelectedValues > 0 && (
+        <S.selectedFilterCount>{numberSelectedValues}</S.selectedFilterCount>
+      )}
       {isActiveCategory === nameCategory && (
         <S.filterCategoryMenu>
           <S.filterList>{content}</S.filterList>
