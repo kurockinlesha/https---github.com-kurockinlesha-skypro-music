@@ -6,7 +6,7 @@ import { TrackListFilterCategory } from "../TrackListFilterCategory/TrackListFil
 import { setFilterPlaylist } from "../../store/slices/tracksSlice";
 import { filtersPlaylistSelector } from "../../store/selectors/tracks";
 
-export function TrackListFilter({ tracks, currentPage }) {
+export function TrackListFilter({ selectedArrListFilter, currentPage }) {
   const dispatch = useDispatch();
   const [activeCategoryFilter, setActiveCategoryFilter] = useState("");
   const selectedFiltersPlaylist = useSelector(filtersPlaylistSelector);
@@ -26,7 +26,7 @@ export function TrackListFilter({ tracks, currentPage }) {
         <TrackListFilterCategory
           nameCategory="исполнителю"
           numberSelectedValues={selectedFiltersPlaylist?.authors.length}
-          content={uniq(tracks?.map((track) => track?.author)).map((author) => (
+          content={uniq(selectedArrListFilter?.map((track) => track?.author)).map((author) => (
             <S.filterItem
               key={author}
               onClick={() => {
@@ -46,7 +46,7 @@ export function TrackListFilter({ tracks, currentPage }) {
             isActiveCategory={activeCategoryFilter}
             setActiveCategory={setActiveCategoryFilter}
             numberSelectedValues={selectedFiltersPlaylist?.genres.length}
-            content={uniq(tracks?.map((track) => track.genre)).map((genre) => (
+            content={uniq(selectedArrListFilter?.map((track) => track.genre)).map((genre) => (
               <S.filterItem
                 key={genre}
                 onClick={() => {

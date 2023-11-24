@@ -14,11 +14,15 @@ import {
 
 export function Favourites() {
   const dispatch = useDispatch();
-  const { data, error, isLoading } = useGetFavouriteTracksAllQuery();
   const favouritesTracks = useSelector(favouritesTracksSelector);
   const filtred = useSelector(filtersPlaylistSelector);
+  const { data, error, isLoading } = useGetFavouriteTracksAllQuery();
+
   const tracks =
-    filtred?.isActiveSort || filtred?.isActiveAuthors || filtred?.isActiveGenres
+    filtred?.isActiveSort ||
+    filtred?.isActiveAuthors ||
+    filtred?.isActiveGenres ||
+    filtred?.isActiveSearch
       ? filtred?.filterTracksArr
       : favouritesTracks;
 

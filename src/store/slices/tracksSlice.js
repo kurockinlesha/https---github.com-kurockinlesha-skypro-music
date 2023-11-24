@@ -18,6 +18,8 @@ const initialState = {
     isActiveGenres: false,
     sort: "По умолчанию",
     isActiveSort: false,
+    search: "",
+    isActiveSearch: false,
     filterTracksArr: [],
   },
 };
@@ -83,9 +85,11 @@ export const trackSlice = createSlice({
     },
 
     setFilterPlaylist: (state, action) => {
-      const { sort, authors, genres } = action.payload;
+      const { sort, authors, genres, search } = action.payload;
 
-      if (authors) {
+      if (authors === "") {
+        state.FiltersPlaylist.authors = [];
+      } else if (authors) {
         if (state.FiltersPlaylist.authors.includes(authors)) {
           state.FiltersPlaylist.authors = state.FiltersPlaylist.authors.filter(
             (item) => item !== authors
@@ -98,7 +102,9 @@ export const trackSlice = createSlice({
         }
       }
 
-      if (genres) {
+      if (genres === "") {
+        state.FiltersPlaylist.genres = [];
+      } else if (genres) {
         if (state.FiltersPlaylist.genres.includes(genres)) {
           state.FiltersPlaylist.genres = state.FiltersPlaylist.genres.filter(
             (item) => item !== genres
@@ -115,13 +121,20 @@ export const trackSlice = createSlice({
         state.FiltersPlaylist.sort = sort;
       }
 
+      if (search?.length > 0) {
+        state.FiltersPlaylist.search = search;
+      } else {
+        state.FiltersPlaylist.search = "";
+        state.FiltersPlaylist.isActiveSearch = false;
+      }
+
       const getFilteredTracks = () => {
         let filterArray = [];
         // список треков
         if (state.currentPage === "Main") {
           filterArray = state.allTracks;
         }
-        if (state.currentPage === "Favoutites") {
+        if (state.currentPage === "Favourites") {
           filterArray = state.favouritesTracks;
         }
 
@@ -164,6 +177,17 @@ export const trackSlice = createSlice({
           );
         } else {
           state.FiltersPlaylist.isActiveSort = false;
+        }
+
+        // поиск
+        if (state.FiltersPlaylist.search.length > 0) {
+          state.FiltersPlaylist.isActiveSearch = true;
+
+          filterArray = filterArray.filter((item) =>
+            item.name
+              .toLocaleLowerCase()
+              .includes(state.FiltersPlaylist.search.toLocaleLowerCase())
+          );
         }
 
         return filterArray;

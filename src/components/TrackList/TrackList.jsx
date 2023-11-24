@@ -33,10 +33,12 @@ export function TrackList({ title, error, isLoading, tracks, isFavorites }) {
   const arrayTracksAll = shuffled ? shuffledAllTracks : currentPlaylist;
   const filtersPlaylist = useSelector(filtersPlaylistSelector);
 
+
   useEffect(() => {
     dispatch(setFilterPlaylist({ sort: "По умолчанию" }));
-    // dispatch(setFilterPlaylist({ authors: "" }));
-    // dispatch(setFilterPlaylist({ genres: "" }));
+    dispatch(setFilterPlaylist({ search: "" }));
+    dispatch(setFilterPlaylist({ authors: "" }));
+    dispatch(setFilterPlaylist({ genres: "" }));
   }, [title]);
 
   const handleCurrentTrack = (track) => {
@@ -69,14 +71,14 @@ export function TrackList({ title, error, isLoading, tracks, isFavorites }) {
         {title || "Треки"}
       </S.centerblockH2>
       <TrackListFilter
-        tracks={currentPage === "Main" ? allTracks : categoryArr}
-        // tracks={
-        //   (currentPage === "Main"
-        //     ? allTracks
-        //     : (currentPage === "Favourites"
-        //     ? favouritesTracks
-        //     : categoryArr))
-        // }
+        selectedArrListFilter={
+          // eslint-disable-next-line no-nested-ternary
+          currentPage === "Main"
+            ? allTracks
+            : currentPage === "Favourites"
+            ? favouritesTracks
+            : categoryArr
+        }
         currentPage={currentPage}
       />
       <S.centerblockContent>

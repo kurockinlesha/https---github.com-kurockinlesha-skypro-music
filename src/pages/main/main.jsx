@@ -14,7 +14,10 @@ export function Main() {
   const filtred = useSelector(filtersPlaylistSelector);
   const { data, isError, isLoading } = useGetTracksAllQuery();
   const tracks =
-    filtred?.isActiveSort || filtred?.isActiveAuthors || filtred?.isActiveGenres
+    filtred?.isActiveSort ||
+    filtred?.isActiveAuthors ||
+    filtred?.isActiveGenres ||
+    filtred?.isActiveSearch
       ? filtred?.filterTracksArr
       : tracksAll;
 

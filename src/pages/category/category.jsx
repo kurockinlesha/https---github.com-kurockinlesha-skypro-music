@@ -17,7 +17,7 @@ export function Category() {
   const dispatch = useDispatch();
   const { data, error, isLoading } = useGetSelectionsQuery(Number(params.id));
   const tracks =
-    filtred?.isActiveSort || filtred?.isActiveAuthors
+    filtred?.isActiveSort || filtred?.isActiveAuthors || filtred?.isActiveSearch
       ? filtred?.filterTracksArr
       : categoryArr;
 
